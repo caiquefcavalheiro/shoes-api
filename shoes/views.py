@@ -8,16 +8,12 @@ class ShoesView(generics.ListCreateAPIView):
     queryset = Shoes.objects.all()
     serializer_class = ShoesSerializer
 
-    def get(self, request, *args, **kwargs):
-        search_params = request.query_params.get("search")
-
-        if search_params:
-            shoes = Shoes.objects.filter(name=search_params)
-
-            serializer = ShoesSerializer(shoes, many=True)
-            return Response(serializer.data)
-
-        return super().get(request, *args, **kwargs)
+    def get_queryset(self):
+        search_params = self.request.query_params.get("search")
+        queryset = Shoes.objects.all()
+        if search_params is not None:
+            queryset = queryset.filter(name__icontains=search_params)
+        return queryset
 
 
 class ShoewViewId(generics.RetrieveUpdateDestroyAPIView):
