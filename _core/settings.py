@@ -15,6 +15,7 @@ from django.core.management.utils import get_random_secret_key
 import os
 import dotenv
 import json
+import dj_database_url
 
 dotenv.load_dotenv()
 
@@ -95,16 +96,12 @@ DATABASES = {
     }
 }
 
-# if DATABASE_URL:
-#     db_from_env = dj_database_url.config(
-#         default=DATABASE_URL, conn_max_age=500, ssl_require=True
-#     )
-#     DATABASES["default"].update(db_from_env)
-#     DEBUG = False
+if os.getenv("DATABASE_URL"):
+    DATABASES["default"] = dj_database_url.config()
+    DEBUG = False
 
-
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_DIRS = (os.path.join(BASE_DIR),)
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles_build", "static")
 
 
 # Password validation
