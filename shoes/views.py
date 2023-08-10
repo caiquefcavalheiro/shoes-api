@@ -1,10 +1,14 @@
 from rest_framework import generics
 from .models import Shoes
 from .serializers import ShoesSerializer
-from rest_framework.response import Response
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 
 class ShoesView(generics.ListCreateAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
     queryset = Shoes.objects.all()
     serializer_class = ShoesSerializer
 
@@ -17,5 +21,8 @@ class ShoesView(generics.ListCreateAPIView):
 
 
 class ShoewViewId(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
     queryset = Shoes.objects.all()
     serializer_class = ShoesSerializer
