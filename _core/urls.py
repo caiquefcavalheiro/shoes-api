@@ -21,4 +21,5 @@ urlpatterns = [
     # path("admin/", admin.site.urls),
     path("", include("shoes.urls")),
     path("", include("users.urls")),
+    path("", include("social_media.urls")),
 ]

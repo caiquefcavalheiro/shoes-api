@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "shoes",
+    "social_media",
     "users.apps.UsersConfig",
     "corsheaders",
     "rest_framework",
